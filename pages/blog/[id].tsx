@@ -16,15 +16,19 @@ export type Thumbnail = {
   height: number;
   width: number;
 };
+
+export type props = {
+  blogs: Blog;
+};
 export type Props = InferGetStaticPropsType<typeof getStaticProps>;
-export default function BlogId(blog: Blog) {
+export default function BlogId({ blogs }: props) {
   return (
     <main>
-      <h1>{blog.title}</h1>
-      <p>{blog.publishedAt}</p>
+      <h1>{blogs.title}</h1>
+      <p>{blogs.publishedAt}</p>
       <div
         dangerouslySetInnerHTML={{
-          __html: `${blog.body}`,
+          __html: `${blogs.body}`,
         }}
       />
     </main>
@@ -43,9 +47,10 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: { params: { id: string } }) => {
   const id = context.params.id;
   const data = await client.get({ endpoint: "blog", contentId: id });
+  console.log(data);
   return {
     props: {
-      blog: data,
+      blogs: data,
     },
   };
 };
