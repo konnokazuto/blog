@@ -17,7 +17,7 @@ export type Thumbnail = {
   width: number;
 };
 export type Props = InferGetStaticPropsType<typeof getStaticProps>;
-export default function BlogId({ blog }: Props) {
+export default function BlogId(blog: Blog) {
   return (
     <main>
       <h1>{blog.title}</h1>
